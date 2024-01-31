@@ -1,13 +1,21 @@
+import React from "react";
 import Square from "./Square";
 import Status from "./Status";
+import { Squares, PlayerMark } from "./Game";
 import { calculateWinner } from "../utils/gameUtils";
 
-export default function Board({ xTurn, currentMove, onPlay}) {
+interface BoardProps {
+    xTurn: boolean;
+    currentMove: Squares;
+    onPlay: (nextSquares: PlayerMark[], i: number) => void;
+}
 
-    const { squares, row, col } = currentMove;
+export default function Board({ xTurn, currentMove, onPlay}: BoardProps) {
+
+    const { squares, row, col }: Squares = currentMove;
 
 
-    function handleClick(i) {
+    function handleClick(i: number) {
         // Return early if square is filled or winner is decided
         if (squares[i] || calculateWinner(squares)) return;
 
@@ -19,13 +27,13 @@ export default function Board({ xTurn, currentMove, onPlay}) {
     }
 
 
-    const winningSquares = calculateWinner(squares);
+    const winningSquares = calculateWinner(squares) || false;
     const winner = winningSquares && squares[winningSquares[0]];
-    let status;
+    let status: string;
 
 
 
-    let rows = [];
+    const rows = [];
     for (let i = 0; i < 3; i++) {
         let cells = [];
         for (let j = 0; j< 3; j++) {

@@ -1,6 +1,8 @@
+import React from "react";
 import { useState } from "react";
+import { Squares } from "./Game";
 
-export default function MovesList( {moves} ) {
+export default function MovesList( {moves}: {moves:React.JSX.Element[]} ) {
     const [ascending, setAscending] = useState(true);
     
     function handleReverseOrder() {
