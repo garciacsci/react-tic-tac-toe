@@ -59,14 +59,15 @@ export default function Game() {
 
     return (
         <div className="game">
-        <div className="game-board">
-            <Board xTurn={xTurn} currentMove={currentSquares} onPlay={handlePlay} />
-        </div>
-        {currentMove > 0 && (<div className="game-info">
-            <div className="history">
-            <MovesList moves={moves} />
+            <div className="game-board">
+                <Board xTurn={xTurn} currentMove={currentSquares} onPlay={handlePlay} />
             </div>
-        </div>)}
+            
+            <div className="game-info">
+                <div className="history">
+                    <MovesList moves={moves} />
+                </div>
+            </div>
         </div>
     );
 }
