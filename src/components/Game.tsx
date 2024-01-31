@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import {useState} from "react";
 import Board from "./Board";
 import MovesList from "./MovesList";
@@ -31,7 +31,7 @@ export default function Game() {
         setCurrentMove(nextMove);
     } 
 
-    const moves: React.JSX.Element[] = history.map( (squares, move) => {
+    const moves: ReactElement[] = history.map( (squares, move) => {
         let description;
 
         if (move == currentMove) {

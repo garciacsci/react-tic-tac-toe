@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { useState } from "react";
 
-export default function MovesList( {moves}: {moves:React.JSX.Element[]} ) {
+export default function MovesList( {moves}: {moves:ReactElement[]} ) {
     const [ascending, setAscending] = useState(true);
     
     function handleReverseOrder() {
