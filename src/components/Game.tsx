@@ -1,14 +1,24 @@
+import React, { ReactElement } from "react";
 import {useState} from "react";
 import Board from "./Board";
 import MovesList from "./MovesList";
 
-export default function Game() {
-    const [history, setHistory] = useState([{ squares: Array(9).fill(null), row: null, col: null }]);
-    const [currentMove, setCurrentMove] = useState(0);
-    const xTurn = currentMove % 2 === 0;
-    const currentSquares = history[currentMove];
+export type PlayerMark = 'X' | 'O' | null;
 
-    function handlePlay(nextSquares, i) {
+export interface Squares {
+    squares: PlayerMark[];
+    row: number | undefined;
+    col: number | undefined;
+}
+
+
+export default function Game() {
+    const [history, setHistory] = useState<Squares[]>([{ squares: Array(9).fill(null), row: undefined, col: undefined }]);
+    const [currentMove, setCurrentMove] = useState<number>(0);
+    const xTurn:boolean = currentMove % 2 === 0;
+    const currentSquares:Squares = history[currentMove];
+
+    function handlePlay(nextSquares: PlayerMark[], i: number) {
         const row = Math.floor(i / 3) + 1;
         const col = i % 3 + 1;
 
@@ -17,11 +27,11 @@ export default function Game() {
         setCurrentMove(nextHistory.length - 1);
     }
 
-    function jumpTo(nextMove) {
+    function jumpTo(nextMove: number) {
         setCurrentMove(nextMove);
     } 
 
-    const moves = history.map( (squares, move) => {
+    const moves: ReactElement[] = history.map( (squares, move) => {
         let description;
 
         if (move == currentMove) {
@@ -49,14 +59,15 @@ export default function Game() {
 
     return (
         <div className="game">
-        <div className="game-board">
-            <Board xTurn={xTurn} currentMove={currentSquares} onPlay={handlePlay} />
-        </div>
-        {currentMove > 0 && (<div className="game-info">
-            <div className="history">
-            <MovesList moves={moves} />
+            <div className="game-board">
+                <Board xTurn={xTurn} currentMove={currentSquares} onPlay={handlePlay} />
             </div>
-        </div>)}
+            
+            <div className="game-info">
+                <div className="history">
+                    <MovesList moves={moves} />
+                </div>
+            </div>
         </div>
     );
 }
